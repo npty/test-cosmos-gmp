@@ -24,9 +24,12 @@ const mnemonic = process.env.MNEMONIC;
   console.log(`Wallet address: ${address}`);
   console.log(`Wallet balance: ${balance.amount} ${balance.denom}`);
 
-  // Query message from osmosis contract
+  // You can edit the wasmContractAddress to the address of the contract you want to interact with
   const wasmContractAddress =
-    "osmo1vautfc99tv2kyz4h80squffhzs05um52yh4zx5saxnv372gkjz3ss0kjdn";
+  "osmo1vautfc99tv2kyz4h80squffhzs05um52yh4zx5saxnv372gkjz3ss0kjdn";
+
+
+  // Query message from osmosis contract
   // const response = await client.queryContractSmart(wasmContractAddress, {
   //   get_stored_message: {},
   // });
