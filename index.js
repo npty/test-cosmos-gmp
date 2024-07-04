@@ -43,10 +43,11 @@ const mnemonic = process.env.MNEMONIC;
     },
   };
 
+  const aUSDC =
+    "ibc/1587E7B54FC9EFDA2350DC690EC2F9B9ECEB6FC31CF11884F9C0C5207ABE3921";
   const fee = {
     amount: "300000",
-    denom:
-      "ibc/1587E7B54FC9EFDA2350DC690EC2F9B9ECEB6FC31CF11884F9C0C5207ABE3921",
+    denom: aUSDC,
   };
 
   const result = await client.execute(
