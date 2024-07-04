@@ -2,6 +2,7 @@ require("dotenv").config();
 const { DirectSecp256k1HdWallet } = require("@cosmjs/proto-signing");
 const { GasPrice } = require("@cosmjs/stargate");
 const { SigningCosmWasmClient } = require("@cosmjs/cosmwasm-stargate");
+const { AxelarQueryAPI } = require("@axelar-network/axelarjs-sdk");
 const mnemonic = process.env.MNEMONIC;
 
 (async () => {
@@ -11,6 +12,8 @@ const mnemonic = process.env.MNEMONIC;
 
   const [{ address }] = await wallet.getAccounts();
 
+  const aUSDC =
+    "ibc/1587E7B54FC9EFDA2350DC690EC2F9B9ECEB6FC31CF11884F9C0C5207ABE3921";
   const gasPrice = GasPrice.fromString(`0.4uosmo`);
 
   const client = await SigningCosmWasmClient.connectWithSigner(
@@ -19,14 +22,26 @@ const mnemonic = process.env.MNEMONIC;
     { gasPrice }
   );
 
-  const balance = await client.getBalance(address, "uosmo");
+  const balanceUsdc = await client.getBalance(address, aUSDC);
+  const balanceOsmo = await client.getBalance(address, "uosmo");
 
+  console.log("----- Wallet info -----");
   console.log(`Wallet address: ${address}`);
-  console.log(`Wallet balance: ${balance.amount} ${balance.denom}`);
+  console.log(`aUSDC balance: ${balanceUsdc.amount / 1e6} aUSDC`);
+  console.log(`Osmo balance: ${balanceOsmo.amount / 1e6} OSMO\n`);
+  const api = new AxelarQueryAPI({ environment: "testnet" });
+  const gasAmount = await api.estimateGasFee(
+    "osmosis-7",
+    "Avalanche",
+    500000,
+    "auto",
+    "aUSDC"
+  );
+  console.log(`Estimated gas fee: ${gasAmount}`);
 
   // You can edit the wasmContractAddress to the address of the contract you want to interact with
   const wasmContractAddress =
-  "osmo1xv78lz3d06303g28ly0jfn26l7d0ap9tetesff3uum86wasg7tdq24xcnm";
+    "osmo1xv78lz3d06303g28ly0jfn26l7d0ap9tetesff3uum86wasg7tdq24xcnm";
 
   // Query message from osmosis contract
   const response = await client.queryContractSmart(wasmContractAddress, {
@@ -43,10 +58,8 @@ const mnemonic = process.env.MNEMONIC;
     },
   };
 
-  const aUSDC =
-    "ibc/1587E7B54FC9EFDA2350DC690EC2F9B9ECEB6FC31CF11884F9C0C5207ABE3921";
   const fee = {
-    amount: "300000",
+    amount: gasAmount,
     denom: aUSDC,
   };
 
