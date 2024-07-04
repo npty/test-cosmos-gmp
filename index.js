@@ -37,16 +37,16 @@ const mnemonic = process.env.MNEMONIC;
     "auto",
     "aUSDC"
   );
-  console.log(`Estimated gas fee: ${gasAmount}`);
+  console.log(`Estimated gas fee: ${parseInt(gasAmount) / 1e6} aUSDC`);
 
   if (balanceUsdc.amount < gasAmount) {
     console.log("Insufficient aUSDC balance to pay for gas fee");
-    return process.exit(0)
+    return process.exit(0);
   }
 
   if (balanceOsmo.amount < 1e6) {
     console.log("Insufficient OSMO balance to pay for gas fee");
-    return process.exit(0)
+    return process.exit(0);
   }
 
   // You can edit the wasmContractAddress to the address of the contract you want to interact with
