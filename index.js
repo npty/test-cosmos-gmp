@@ -33,7 +33,7 @@ const mnemonic = process.env.MNEMONIC;
   const gasAmount = await api.estimateGasFee(
     "osmosis-7",
     "Avalanche",
-    500000,
+    100000,
     "auto",
     "aUSDC"
   );
