@@ -46,7 +46,7 @@ osmosisd tx wasm store ./artifacts/send_receive.wasm --from wallet --gas-prices 
 Check the codeId on mintscan, and replace the codeId in the following command
 
 ```bash
-osmosisd tx wasm instantiate <codeId> '{"channel":"channel-4118"}' --from wallet --label "send_receive" --gas-prices 0.1uosmo --gas auto --gas-adjustment 1.3 --no-admin -y -b sync
+osmosisd tx wasm instantiate <codeId> '{"channel":"channel-4118"}' --from wallet --label "send_receive" --gas-prices 0.1uosmo --gas auto --gas-adjustment 1.3 --no-admin -y -b sync --output json
 ```
 
 ### 3. Create .env
