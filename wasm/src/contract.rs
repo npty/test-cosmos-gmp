@@ -25,6 +25,13 @@ pub fn instantiate(
         channel: msg.channel,
     };
     CONFIG.save(deps.storage, &cfg)?;
+    STORED_MESSAGE.save(
+        deps.storage,
+        &Message {
+            sender: String::from("none"),
+            message: String::from("none"),
+        },
+    )?;
 
     Ok(Response::new())
 }

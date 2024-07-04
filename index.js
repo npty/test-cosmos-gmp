@@ -26,13 +26,13 @@ const mnemonic = process.env.MNEMONIC;
 
   // You can edit the wasmContractAddress to the address of the contract you want to interact with
   const wasmContractAddress =
-    "osmo1tfy382y2avuxm66wt7s0tjsjlwkr2gltyvy5ppurl7300jpa4mvqqhdfvt";
+  "osmo1xv78lz3d06303g28ly0jfn26l7d0ap9tetesff3uum86wasg7tdq24xcnm";
 
   // Query message from osmosis contract
-  // const response = await client.queryContractSmart(wasmContractAddress, {
-  //   get_stored_message: {},
-  // });
-  // console.log("Message from Osmosis contract: ", response.message);
+  const response = await client.queryContractSmart(wasmContractAddress, {
+    get_stored_message: {},
+  });
+  console.log("Message from Osmosis contract:", response.message);
 
   // Send message to osmosis contract
   const payload = {
@@ -50,6 +50,8 @@ const mnemonic = process.env.MNEMONIC;
     denom: aUSDC,
   };
 
+  console.log("Sending message to Osmosis contract...");
+
   const result = await client.execute(
     address,
     wasmContractAddress,
@@ -59,5 +61,5 @@ const mnemonic = process.env.MNEMONIC;
     [fee]
   );
 
-  console.log("Sent! ", result.transactionHash);
+  console.log("Sent:", result.transactionHash);
 })();
